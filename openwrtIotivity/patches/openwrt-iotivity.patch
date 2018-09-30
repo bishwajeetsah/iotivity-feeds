@@ -1,0 +1,153 @@
+diff --git a/bridging/common/pluginServer.cpp b/bridging/common/pluginServer.cpp
+index 0b15c10e3..71e83202a 100644
+--- a/bridging/common/pluginServer.cpp
++++ b/bridging/common/pluginServer.cpp
+@@ -32,6 +32,9 @@
+ #ifdef HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
++#ifdef HAVE_SYS_TIME_H
++#include <sys/time.h>
++#endif
+
+ #include "messageHandler.h"
+ #include "pluginServer.h"
+diff --git a/bridging/plugins/hue_plugin/hue_resource.cpp b/bridging/plugins/hue_plugin/hue_resource.cpp
+index 1b6a3c93d..b7bc15a1e 100644
+--- a/bridging/plugins/hue_plugin/hue_resource.cpp
++++ b/bridging/plugins/hue_plugin/hue_resource.cpp
+@@ -95,9 +95,9 @@ const std::string SWITCH_RELATIVE_URI = "/switch";
+ const std::string BRIGHTNESS_RELATIVE_URI = "/brightness";
+ const std::string CHROMA_RELATIVE_URI = "/chroma";
+
+-const uint BINARY_SWITCH_CALLBACK = 0;
+-const uint BRIGHTNESS_CALLBACK = 1;
+-const uint CHROMA_CALLBACK = 2;
++const uint8_t BINARY_SWITCH_CALLBACK = 0;
++const uint8_t BRIGHTNESS_CALLBACK = 1;
++const uint8_t CHROMA_CALLBACK = 2;
+
+ FILE *hue_fopen(const char *path, const char *mode)
+ {
+diff --git a/bridging/plugins/lifx_plugin/lifxResource.cpp b/bridging/plugins/lifx_plugin/lifxResource.cpp
+index e57a9e556..209c157e0 100644
+--- a/bridging/plugins/lifx_plugin/lifxResource.cpp
++++ b/bridging/plugins/lifx_plugin/lifxResource.cpp
+@@ -50,8 +50,8 @@ MPMPluginCtx *g_pluginCtx = NULL;
+
+ static std::string OIC_BINARY_SWITCH = "oic.r.switch.binary";
+ static std::string OIC_BRIGHTNESS_LIGHT = "oic.r.light.brightness";
+-const uint BINARY_SWITCH_CALLBACK = 0;
+-const uint BRIGHTNESS_CALLBACK = 1;
++const uint8_t BINARY_SWITCH_CALLBACK = 0;
++const uint8_t BRIGHTNESS_CALLBACK = 1;
+
+ static const std::string BINARY_SWITCH_RELATIVE_URI = "/switch";
+ static const std::string BRIGHTNESS_RELATIVE_URI = "/brightness";
+diff --git a/build_common/SConscript b/build_common/SConscript
+index 48706e3e3..f2b4f8fbf 100644
+--- a/build_common/SConscript
++++ b/build_common/SConscript
+@@ -903,7 +903,7 @@ def ScanJSON(env, directory=None):
+         src = src_dir + filename
+         dst = dst_dir + filename
+         targets += Command(dst, src, Copy("$TARGET", "$SOURCE"))
+-        if env.get('CROSS_COMPILE') == None:
++        if env.get('CROSS_COMPILE') == None and env.get('WITH_ENV') == False:
+             # Copy back compiled files to sources (to be used when compilation is not possible)
+             cbor_file = env.Cbor(json_file)
+             targets.append(cbor_file)
+diff --git a/plugins/SConscript b/plugins/SConscript
+index 38918de0e..61813ae7d 100644
+--- a/plugins/SConscript
++++ b/plugins/SConscript
+@@ -34,7 +34,6 @@ if target_os not in ['android', 'darwin', 'ios', 'tizen', 'msys_nt', 'windows']:
+ 
+     SConscript('src/SConscript')
+ 
+-    SConscript('unittests/SConscript')
+ 
+     if build_sample == 'ON':
+         if target_os in ['linux']:
+diff --git a/resource/csdk/resource-directory/SConscript b/resource/csdk/resource-directory/SConscript
+index 8f79b707c..071742f8c 100644
+--- a/resource/csdk/resource-directory/SConscript
++++ b/resource/csdk/resource-directory/SConscript
+@@ -138,5 +138,3 @@ if target_os in ['linux']:
+ ######################################################################
+ # Build UnitTests of the Resource Directory
+ ################################################ ######################
+-if target_os in ['linux']:
+-    SConscript('unittests/SConscript')
+diff --git a/service/resource-encapsulation/src/common/SConscript b/service/resource-encapsulation/src/common/SConscript
+index 34b89d182..63231e7ea 100644
+--- a/service/resource-encapsulation/src/common/SConscript
++++ b/service/resource-encapsulation/src/common/SConscript
+@@ -23,10 +23,10 @@
+ ##
+ 
+ import os
++Import('env')
+ 
+ # SConscript file for Local PKI google tests
+-gtest_env = SConscript('#extlibs/gtest/SConscript')
+-lib_env = gtest_env.Clone()
++lib_env = env.Clone() 
+ 
+ # Add third party libraries
+ SConscript('#service/third_party_libs.scons', exports = 'lib_env')
+@@ -102,5 +102,3 @@ rcs_common_env.AddPthreadIfNeeded()
+ ######################################################################
+ # Build Test Expiry Timer and primitive Resource
+ ######################################################################
+-if target_os in ['linux']:
+-    SConscript('primitiveResource/unittests/SConscript')
+diff --git a/service/resource-encapsulation/src/serverBuilder/SConscript b/service/resource-encapsulation/src/serverBuilder/SConscript
+index bac684792..74d26af27 100644
+--- a/service/resource-encapsulation/src/serverBuilder/SConscript
++++ b/service/resource-encapsulation/src/serverBuilder/SConscript
+@@ -18,13 +18,15 @@
+ #
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
++import os
++Import('env')
++
+ ##
+ # rcs_server (Server Builder) project build script
+ ##
+ # SConscript file for Local PKI google tests
+ 
+-gtest_env = SConscript('#extlibs/gtest/SConscript')
+-lib_env = gtest_env.Clone()
++lib_env = env.Clone()
+ rd_mode = lib_env.get('RD_MODE')
+ 
+ # Add third party libraries
+diff --git a/resource/csdk/security/provisioning/sample/sampleserver_justworks.cpp b/resource/csdk/security/provisioning/sample/sampleserver_justworks.cpp
+index c761246e2..97a7aa160 100644
+--- a/resource/csdk/security/provisioning/sample/sampleserver_justworks.cpp
++++ b/resource/csdk/security/provisioning/sample/sampleserver_justworks.cpp
+@@ -38,6 +38,9 @@
+ #include "cloud/cloudresource.h"
+ #endif // __WITH_TLS__ && WITH_CLOUD
+
++#ifdef HAVE_SYS_TIME_H
++#include <sys/time.h>
++#endif
+ #ifdef HAVE_WINDOWS_H
+ #include <windows.h>
+ /** @todo stop-gap for naming issue. Windows.h does not like us to use ERROR */
+diff --git a/resource/csdk/security/provisioning/sample/autoprovisioningclient.c b/resource/csdk/security/provisioning/sample/autoprovisioningclient.c
+index 6eb897d0b..88e49ec35 100644
+--- a/resource/csdk/security/provisioning/sample/autoprovisioningclient.c
++++ b/resource/csdk/security/provisioning/sample/autoprovisioningclient.c
+@@ -56,6 +56,8 @@
+ #define access _access_s
+ #endif
+
++#include "cloud/cloudresource.h"
++
+ /// This example is using experimental API, so there is no guarantee of support for future release,
+ /// nor any there any guarantee that breaking changes will not occur across releases.
+ #include "experimental/logger.h"
