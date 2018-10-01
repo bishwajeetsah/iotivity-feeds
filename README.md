@@ -14,3 +14,4 @@ OpenWRT feed for Iotivity 2.0.0
 1. Need to copy liboc.so and liboc_logger.so from build directory to /usr/lib directory of openwrt target staging directory when the linking of libresource_directory.so fails with the following error:
   "ld: warning: liboc.so, needed by libresource_directory.so, not found (try using -rpath or -rpath-link)
   ld: warning: liboc_logger.so, needed by libresource_directory.so, not found (try using -rpath or -rpath-link)"
+2. mbedtls cryptography library package creates linking problem for iotivity. Change cryptography library of curl package from mbedtls to openssl and disable mbedtls package using "make menuconfig"  
