@@ -77,6 +77,15 @@ define Package/iotivity-2.0.0-resource-samples
   MENU:=1
 endef
 
+define Package/iotivity-2.0.0-security-tools
+  SECTION:=net
+  CATEGORY:=Network
+  DEPENDS:=+iotivity-2.0.0
+  TITLE:=IoTivity Security Tools
+  URL:=https://www.iotivity.org
+  MENU:=1
+endef
+
 PKG_TINYCBOR_NAME:=tinycbor
 PKG_TINYCBOR_PROTO:=git
 PKG_TINYCBOR_VERSION:=0.5.1
@@ -185,6 +194,12 @@ define Package/iotivity-2.0.0/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/librcs_client.so $(1)/usr/lib/
 endef
 
+define Package/iotivity-2.0.0-security-tools/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/json2cbor $(1)/usr/iotivity-samples/resource/csdk/security/tool/json2cbor
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/svrdbeditor $(1)/usr/iotivity-samples/resource/csdk/security/tool/svrdbeditor
+endef
+
 define Package/iotivity-2.0.0-resource-samples/install
 	$(INSTALL_DIR) $(1)/usr/iotivity-samples/resource
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleclient $(1)/usr/iotivity-samples/resource/simpleclient
@@ -218,4 +233,5 @@ define Package/iotivity-2.0.0-resource-samples/install
 endef
 
 $(eval $(call BuildPackage,iotivity-2.0.0))
+$(eval $(call BuildPackage,iotivity-2.0.0-security-tools))
 $(eval $(call BuildPackage,iotivity-2.0.0-resource-samples))
