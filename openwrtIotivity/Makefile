@@ -189,6 +189,32 @@ define Package/iotivity-2.0.0-resource-samples/install
 	$(INSTALL_DIR) $(1)/usr/iotivity-samples/resource
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleclient $(1)/usr/iotivity-samples/resource/simpleclient
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleserver $(1)/usr/iotivity-samples/resource/simpleserver
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/oic_svr_db_client.dat $(1)/usr/iotivity-samples/resource/oic_svr_db_client.dat
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/oic_svr_db_client.json $(1)/usr/iotivity-samples/resource/oic_svr_db_client.json
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/oic_svr_db_server.dat $(1)/usr/iotivity-samples/resource/oic_svr_db_server.dat
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/oic_svr_db_server.json $(1)/usr/iotivity-samples/resource/oic_svr_db_server.json
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleserver_introspection.dat $(1)/usr/iotivity-samples/resource/simpleserver_introspection.dat
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleserver_introspection.json $(1)/usr/iotivity-samples/resource/simpleserver_introspection.json	
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/devicediscoveryclient $(1)/usr/iotivity-samples/resource/devicediscoveryclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/devicediscoveryserver $(1)/usr/iotivity-samples/resource/devicediscoveryserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/fridgeclient $(1)/usr/iotivity-samples/resource/fridgeclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/fridgeserver $(1)/usr/iotivity-samples/resource/fridgeserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/garageclient $(1)/usr/iotivity-samples/resource/garageclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/garageserver $(1)/usr/iotivity-samples/resource/garageserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/groupclient $(1)/usr/iotivity-samples/resource/groupclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/groupserver $(1)/usr/iotivity-samples/resource/groupserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/lightserver $(1)/usr/iotivity-samples/resource/lightserver
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/light_introspection.dat $(1)/usr/iotivity-samples/resource/light_introspection.dat
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/light_introspection.json $(1)/usr/iotivity-samples/resource/light_introspection.json
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/presenceclient $(1)/usr/iotivity-samples/resource/presenceclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/presenceserver $(1)/usr/iotivity-samples/resource/presenceserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/rdclient $(1)/usr/iotivity-samples/resource/rdclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/roomclient $(1)/usr/iotivity-samples/resource/roomclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/roomserver $(1)/usr/iotivity-samples/resource/roomserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleclientHQ $(1)/usr/iotivity-samples/resource/simpleclientHQ
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleserverHQ $(1)/usr/iotivity-samples/resource/simpleserverHQ
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/simpleclientserver $(1)/usr/iotivity-samples/resource/simpleclientserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/examples/threadingsample $(1)/usr/iotivity-samples/resource/threadingsampl
 endef
 
 $(eval $(call BuildPackage,iotivity-2.0.0))
