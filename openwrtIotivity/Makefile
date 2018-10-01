@@ -4,7 +4,6 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/iotivity/iotivity.git
 PKG_SOURCE_VERSION:=2.0.0
 PKG_NAME:=iotivity
-PKG_VERSION:=2.0.0
 
 PKG_MIRROR_HASH:=whatever
 
