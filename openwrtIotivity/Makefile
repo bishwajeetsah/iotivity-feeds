@@ -196,8 +196,8 @@ endef
 
 define Package/iotivity-2.0.0-security-tools/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/json2cbor $(1)/usr/iotivity-samples/resource/csdk/security/tool/json2cbor
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/svrdbeditor $(1)/usr/iotivity-samples/resource/csdk/security/tool/svrdbeditor
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/json2cbor $(1)/usr/bin/json2cbor
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/linux/$(ARCH)/$(APP_OPTIM)/resource/csdk/security/tool/svrdbeditor $(1)/usr/bin/svrdbeditor
 endef
 
 define Package/iotivity-2.0.0-resource-samples/install
