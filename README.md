@@ -4,7 +4,7 @@ OpenWRT feed for Iotivity 2.0.0
 
 Add the OpenwrtIotivity feed:
 
-echo src-git linkit https://github.com/bishwajeetsah/iotivity-feeds.git >> feeds.conf
+echo src-git openwrtIotivity https://github.com/bishwajeetsah/iotivity-feeds.git >> feeds.conf
 
 # Patches
 
