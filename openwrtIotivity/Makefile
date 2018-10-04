@@ -123,6 +123,8 @@ define Download/openwrtIotivity-mbedtls
 endef
 $(eval $(call Download,openwrtIotivity-mbedtls))
 
+EXTRA_CXXFLAGS:=-g
+
 SCONS_OPTIONS += \
 	TARGET_OS=linux \
 	TARGET_TRANSPORT=IP \
